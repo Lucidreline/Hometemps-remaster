@@ -8,14 +8,14 @@ const client = new DynamoDBClient({});
 let ddbDocClient = DynamoDBDocumentClient.from(client);
 
 // redirect dynamodb if this is ran locally
-if (process.env.AWS_SAM_LOCAL){
+if (process.env.AWS_SAM_LOCAL) {
     ddbDocClient = DynamoDBDocumentClient.from(new DynamoDBClient({
         endpoint: "http://172.18.0.2:8000"
-      }));
+    }));
 }
 
 // Get the DynamoDB table name from environment variables
-const tableName = process.env.SAMPLE_TABLE;
+const tableName = "HomeTemps";
 
 /**
  * A simple example includes a HTTP get method to get all items from a DynamoDB table.
@@ -31,7 +31,7 @@ export const getAllItemsHandler = async (event) => {
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#scan-property
     // https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html
     var params = {
-        TableName : tableName
+        TableName: tableName
     };
 
     try {
