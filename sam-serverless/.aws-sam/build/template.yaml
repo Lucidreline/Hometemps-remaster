@@ -59,6 +59,34 @@ Resources:
       CodeUri: getByIdFunction
     Metadata:
       SamResourceId: getByIdFunction
+  getXMostRecentItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-x-most-recent-items.getXMostRecentItemsHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP get method to get one item by
+        id from a DynamoDB table.
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: SampleTable
+      Environment:
+        Variables:
+          SAMPLE_TABLE:
+            Ref: SampleTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /getxmostrecentitems/{timestampQuantity}
+            Method: GET
+      CodeUri: getXMostRecentItemsFunction
+    Metadata:
+      SamResourceId: getXMostRecentItemsFunction
   putItemFunction:
     Type: AWS::Serverless::Function
     Properties:
