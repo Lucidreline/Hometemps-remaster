@@ -1,6 +1,8 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 const client = new DynamoDBClient({});
+import { BatchGetItemCommand } from "@aws-sdk/client-dynamodb";
+
 
 let ddbDocClient = DynamoDBDocumentClient.from(client);
 
@@ -51,34 +53,30 @@ export const getXMostRecentItemsHandler = async (event) => {
     if (event.httpMethod !== 'GET')
         throw new Error(`getXMostRecentTimestampsMethod only accepts GET method, you tried: ${event.httpMethod} method.`);
 
-    console.log('recieved: ', event)
+    // console.log('recieved: ', event)
 
     const timestampQuantity = event.pathParameters.timestampQuantity;
     const formattedKeys = formatTimestampsForQuery(getXMostRecentTimestamps(timestampQuantity))
 
-    // var params = {
-    //     RequestItems: {
-    //         "HomeTemps": {
-    //             Keys: [
-    //                 { 'KEY_NAME': { N: 'KEY_VALUE_1' } },
-    //                 { 'KEY_NAME': { N: 'KEY_VALUE_2' } },
-    //                 { 'KEY_NAME': { N: 'KEY_VALUE_3' } }
-    //             ],
-    //             ProjectionExpression: 'KEY_NAME, ATTRIBUTE'
-    //         }
-    //     }
-    // };
+    var params = {
+        RequestItems: {
+            "HomeTemps": {
+                Keys: formattedKeys,
+                // ProjectionExpression: 'timestamp, timestamp'
+            }
+        }
+    };
 
-    // try {
-    //     const data = await ddbDocClient.batchGetItem()
-    //     var items = data.Items;
-    // } catch (err) {
-    //     console.log("Error", err);
-    // }
+    try {
+        const data = await ddbDocClient.send(new BatchGetItemCommand(params))
+        console.log(data)
+    } catch (err) {
+        console.log("Error", err);
+    }
 
     const response = {
         statusCode: 200,
-        body: JSON.stringify({ keys: formattedKeys })
+        body: JSON.stringify({ keys: "pls work" })
     };
 
     return response;
