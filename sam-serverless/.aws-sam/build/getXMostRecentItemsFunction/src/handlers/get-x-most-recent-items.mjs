@@ -49,6 +49,22 @@ const formatTimestampsForQuery = (timestamps) => {
     return results
 }
 
+const formatQueriedData = (dataList) => {
+    const results = []
+
+    dataList.forEach(item => {
+        results.push(
+            {
+                timestamp: item.timestamp.S,
+                temperature: Number(item.temperature.N),
+                humidity: Number(item.humidity.N)
+            }
+        )
+    })
+
+    return results
+}
+
 export const getXMostRecentItemsHandler = async (event) => {
     if (event.httpMethod !== 'GET')
         throw new Error(`getXMostRecentTimestampsMethod only accepts GET method, you tried: ${event.httpMethod} method.`);
@@ -67,16 +83,28 @@ export const getXMostRecentItemsHandler = async (event) => {
         }
     };
 
+    let formattedData;
+
     try {
-        const data = await ddbDocClient.send(new BatchGetItemCommand(params))
-        console.log(data)
+        const response = await ddbDocClient.send(new BatchGetItemCommand(params))
+        console.log(response)
+        let data;
+        if (response) {
+            data = response.Responses.HomeTemps
+            console.log('responce is a go   ')
+        }
+        else {
+            data = []
+        }
+
+        formattedData = formatQueriedData(data)
     } catch (err) {
         console.log("Error", err);
     }
 
     const response = {
         statusCode: 200,
-        body: JSON.stringify({ keys: "pls work" })
+        body: JSON.stringify({ items: formattedData })
     };
 
     return response;
