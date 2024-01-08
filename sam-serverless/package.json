@@ -12,7 +12,10 @@
         "jest": "^29.2.1"
     },
     "scripts": {
-        "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+        "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+        "local getx": "sam local invoke getXMostRecentItemsFunction --event events/event-get-x-most-recent-items.json --docker-network sam",
+        "local put": "sam local invoke putItemFunction -e events/event-post-item.json --docker-network sam",
+        "local get": "sam local invoke getAllItemsFunction --event events/event-get-all-items.json --docker-network sam"
     },
     "jest": {
         "testMatch": [
@@ -27,4 +30,3 @@
         ]
     }
 }
-
