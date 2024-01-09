@@ -104,8 +104,8 @@ Resources:
             Ref: HomeTemps
       Environment:
         Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
+          MAIN_TABLE:
+            Ref: HomeTemps
       Events:
         Api:
           Type: Api
