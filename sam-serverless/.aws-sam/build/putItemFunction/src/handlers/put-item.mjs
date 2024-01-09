@@ -4,11 +4,12 @@ import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
 const client = new DynamoDBClient({});
 
 let ddbDocClient = DynamoDBDocumentClient.from(client);
+console.log("is this local?", process.env.AWS_SAM_LOCAL)
 
 // redirect dynamodb if this is ran locally
 if (process.env.AWS_SAM_LOCAL) {
     ddbDocClient = DynamoDBDocumentClient.from(new DynamoDBClient({
-        endpoint: "http://172.18.0.2:8000"
+        endpoint: "http://172.20.0.2:8000"
     }));
 }
 
@@ -30,7 +31,7 @@ export const putItemHandler = async (event) => {
     // Creates a new item, or replaces an old item with a new item
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
     var params = {
-        TableName: tableName,
+        TableName: "Hometemps-remastered-HomeTemps-UE0T6NSODGY4",
         Item: { timestamp, temperature, humidity }
     };
 

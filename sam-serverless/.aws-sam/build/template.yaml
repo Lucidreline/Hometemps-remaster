@@ -101,7 +101,7 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: HomeTemps
       Environment:
         Variables:
           SAMPLE_TABLE:
@@ -124,6 +124,15 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
+  HomeTemps:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: timestamp
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
     Properties:
@@ -142,7 +151,3 @@ Outputs:
     Description: API Gateway endpoint URL for Prod stage
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
-Globals:
-  Function:
-    LoggingConfig:
-      LogFormat: JSON
