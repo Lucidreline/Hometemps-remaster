@@ -5,7 +5,6 @@ const client = new DynamoDBClient({});
 
 let ddbDocClient = DynamoDBDocumentClient.from(client);
 
-// redirect dynamodb if this is ran locally
 if (process.env.AWS_SAM_LOCAL) {
     ddbDocClient = DynamoDBDocumentClient.from(new DynamoDBClient({
         endpoint: "http://172.20.0.2:8000"
@@ -21,14 +20,10 @@ export const putItemHandler = async (event) => {
 
     console.info('received:', event);
 
-    // Get id and name from the body of the request
     const body = JSON.parse(event.body);
-    const timestamp = body.timestamp
-    const temperature = body.temperature
-    const humidity = body.humidity
+    const { timestamp, temperature, humidity } = body
 
-    // Creates a new item, or replaces an old item with a new item
-    // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
+
     var params = {
         TableName: tableName,
         Item: { timestamp, temperature, humidity }
@@ -46,7 +41,6 @@ export const putItemHandler = async (event) => {
         body: JSON.stringify(body)
     };
 
-    // All log statements are written to CloudWatch
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
     return response;
 };
