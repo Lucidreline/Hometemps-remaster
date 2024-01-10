@@ -6,7 +6,6 @@ import { BatchGetItemCommand } from "@aws-sdk/client-dynamodb";
 
 let ddbDocClient = DynamoDBDocumentClient.from(client);
 
-// redirect dynamodb if this is ran locally
 if (process.env.AWS_SAM_LOCAL) {
     ddbDocClient = DynamoDBDocumentClient.from(new DynamoDBClient({
         endpoint: "http://172.20.0.2:8000"
@@ -20,14 +19,12 @@ const dateToFormattedString = (dateObj) => {
 }
 
 const getXMostRecentTimestamps = (timestampQuantity) => {
-    // GetBatchItem can only return 25 items at a time, for now I will cap it.
     if (timestampQuantity > 25) timestampQuantity = 25
 
     // get the current time
-    let timestamp = new Date();
+    const timestamp = new Date();
     timestamp.setHours(timestamp.getHours() - 8) // time zone change
-    console.log("Current Hour Check: ", timestamp.getHours())
-    console.log("Timestamp Quantity", timestampQuantity)
+
     // get the current hour at the 0 minute
     let currentHour = new Date(timestamp.setMinutes(0))
 
@@ -39,7 +36,6 @@ const getXMostRecentTimestamps = (timestampQuantity) => {
         currentHour.setHours(currentHour.getHours() - 1)
         results.push(dateToFormattedString(currentHour))
     }
-    console.log("timestamps that I'm looking for: ", JSON.stringify(results))
     return results.reverse()
 }
 
@@ -86,27 +82,19 @@ export const getXMostRecentItemsHandler = async (event) => {
         }
     };
 
-    let formattedData;
-
     try {
         const response = await ddbDocClient.send(new BatchGetItemCommand(params))
-        let data;
-        console.log("raw responce: ", response)
-        if (response) {
-            data = response.Responses[tableName]
-            console.log('data: ', data)
-            console.log(response)
-        }
-        else {
-            data = []
-        }
+        if (response)
+            var data = response.Responses[tableName]
 
-        formattedData = formatQueriedData(data)
+        else
+            data = []
+
+
+        var formattedData = formatQueriedData(data)
     } catch (err) {
         console.log("Error", err);
     }
-
-    console.log(formattedData)
 
     const response = {
         statusCode: 200,
