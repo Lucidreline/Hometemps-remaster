@@ -8,7 +8,8 @@ const getXMostRecentTimestamps = (timestampQuantity) => {
 
   // get the current time
   let timestamp = new Date();
-  timestamp.setHours(timestamp.getHours() - 8) // time zone change
+  console.log(timestamp.getHours())
+  // timestamp.setHours(timestamp.getHours() - 8) // time zone change
 
   // get the current hour at the 0 minute
   let currentHour = new Date(timestamp.setMinutes(0))
@@ -16,7 +17,8 @@ const getXMostRecentTimestamps = (timestampQuantity) => {
 
   // get resulting list of formatted string timestamps
   const results = []
-  for (let i = 0; i < timestampQuantity; i++) {
+  results.push(dateToFormattedString(currentHour))
+  for (let i = 0; i < timestampQuantity - 1; i++) {
     currentHour.setHours(currentHour.getHours() - 1)
     results.push(dateToFormattedString(currentHour))
   }
@@ -84,6 +86,8 @@ const data = [
   }
 ]
 
-const x = formatQueriedData(data)
+
+
+const x = getXMostRecentTimestamps(5)
 console.log(x)
 
