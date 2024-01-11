@@ -1,0 +1,46 @@
+
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
+const client = new DynamoDBClient({});
+
+let ddbDocClient = DynamoDBDocumentClient.from(client);
+
+if (process.env.AWS_SAM_LOCAL) {
+    ddbDocClient = DynamoDBDocumentClient.from(new DynamoDBClient({
+        endpoint: "http://172.20.0.2:8000"
+    }));
+}
+
+const tableName = process.env.MAIN_TABLE;
+
+
+export const putItemHandler = async (event) => {
+    if (event.httpMethod !== 'POST')
+        throw new Error(`postMethod only accepts POST method, you tried: ${event.httpMethod} method.`);
+
+    console.info('received:', event);
+
+    const body = JSON.parse(event.body);
+    const { timestamp, temperature, humidity } = body
+
+
+    var params = {
+        TableName: tableName,
+        Item: { timestamp, temperature, humidity }
+    };
+
+    try {
+        const data = await ddbDocClient.send(new PutCommand(params));
+        console.log("Success - item added or updated", data);
+    } catch (err) {
+        console.log("Error", err.stack);
+    }
+
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify(body)
+    };
+
+    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    return response;
+};
