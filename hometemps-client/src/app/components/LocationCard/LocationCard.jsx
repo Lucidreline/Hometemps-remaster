@@ -13,7 +13,7 @@ const LocationCard = () => {
             <div className="card-body">
                 <div className="temperature-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faTemperatureThreeQuarters} />
-                    <h4 className="temperature-display">67&deg;F</h4>
+                    <h4 className="temperature-display">69&deg;F</h4>
                 </div>
                 <div className="humidity-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faDroplet} />

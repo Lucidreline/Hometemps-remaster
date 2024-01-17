@@ -1,8 +1,7 @@
-import LocationCard from "../components/LocationCard/LocationCard";
+import LocationCardList from "../components/LocationCardList/LocationCardList";
 
 export default function Page() {
     return <div>
-        <LocationCard></LocationCard>
-        <p>Can anyone hear me? I'm trapped in Dashboard</p>
+        <LocationCardList />
     </div>
 }
