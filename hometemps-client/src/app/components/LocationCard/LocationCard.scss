@@ -1,39 +1,40 @@
 .location-card {
     box-shadow: -1px 2px 5px black;
     border-radius: 5px;
-    ;
     display: inline-block;
-    padding: 1rem 5rem;
+    padding: 1rem 4rem;
     margin: 5rem;
 
     .card-title {
+        display: flex;
+        justify-content: center;
         font-weight: 700;
         font-size: 1rem;
         padding-bottom: 1rem;
     }
 
     .card-body {
+        height: 4.5rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 3.5rem;
-    }
 
-    .awesome-icon {
-        width: 0.75rem;
-    }
+        .temperature-section,
+        .humidity-section {
+            display: flex;
+            align-items: center;
+            width: 6rem;
+            justify-content: space-between;
 
-    .temperature-section,
-    .humidity-section {
-        display: flex;
-        align-items: center;
-        border: red solid;
-        width: 4rem;
-        justify-content: space-between;
+            .awesome-icon {
+                width: 1.1rem;
+            }
 
-        h4 {
-            font-family: 'Istok Web', sans-serif;
-            font-size: 1rem;
+            h4 {
+                font-family: 'Istok Web', sans-serif;
+                font-size: 1.4rem;
+                font-weight: bold;
+            }
         }
     }
 
