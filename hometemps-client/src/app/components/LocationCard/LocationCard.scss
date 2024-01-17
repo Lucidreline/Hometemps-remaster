@@ -1,0 +1,40 @@
+.location-card {
+    box-shadow: -1px 2px 5px black;
+    border-radius: 5px;
+    ;
+    display: inline-block;
+    padding: 1rem 5rem;
+    margin: 5rem;
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 3.5rem;
+    }
+
+    .awesome-icon {
+        width: 0.75rem;
+    }
+
+    .temperature-section,
+    .humidity-section {
+        display: flex;
+        align-items: center;
+        border: red solid;
+        width: 4rem;
+        justify-content: space-between;
+
+        h4 {
+            font-family: 'Istok Web', sans-serif;
+            font-size: 1rem;
+        }
+    }
+
+}
