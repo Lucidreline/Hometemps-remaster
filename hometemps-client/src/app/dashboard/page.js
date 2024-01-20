@@ -1,7 +1,7 @@
 import LocationCardList from "../components/LocationCardList/LocationCardList";
 
-export default function Page() {
+export default function Page({ data }) {
     return <div>
-        <LocationCardList />
+        <LocationCardList data={data} />
     </div>
 }

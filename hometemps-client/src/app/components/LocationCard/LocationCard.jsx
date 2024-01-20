@@ -5,19 +5,19 @@ import { faDroplet, faTemperatureThreeQuarters } from '@fortawesome/free-solid-s
 
 import './LocationCard.scss'
 
-
-const LocationCard = () => {
+const LocationCard = ({ location, timestamp }) => {
+    const { temperature, humidity } = timestamp.items[0]
     return (
         <div className="location-card">
-            <h3 className='card-title'>Location</h3>
+            <h3 className='card-title'>{location}</h3>
             <div className="card-body">
                 <div className="temperature-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faTemperatureThreeQuarters} />
-                    <h4 className="temperature-display">69&deg;F</h4>
+                    <h4 className="temperature-display">{temperature}&deg;F</h4>
                 </div>
                 <div className="humidity-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faDroplet} />
-                    <h4 className="humidity-display">45%</h4>
+                    <h4 className="humidity-display">{humidity} %</h4>
                 </div>
             </div>
         </div>

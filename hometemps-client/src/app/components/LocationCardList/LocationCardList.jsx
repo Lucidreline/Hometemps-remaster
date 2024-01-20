@@ -3,15 +3,17 @@ import LocationCard from '../LocationCard/LocationCard'
 
 import './LocationCardList.scss'
 
-const LocationCardList = () => {
+const getCurrentTimestamp = async () => {
+    const res = await fetch('https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/1')
+    return res.json()
+}
+
+
+const LocationCardList = async () => {
+    const timestamp = await getCurrentTimestamp()
     return (
         <div className='location-card-list'>
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
-            <LocationCard />
+            <LocationCard location="Upstairs" timestamp={timestamp} />
         </div>
     )
 }
