@@ -1,7 +1,13 @@
 import Adafruit_DHT
 import requests
 from datetime import datetime
-time = datetime.date(datetime.now())
+from pytz import timezone
+import pytz
+
+now = datetime.now(tz=pytz.utc)
+date_format='%m/%d/%Y %H:00'
+#time = datetime.date(datetime.now())
+date = now.astimezone(timezone('America/Los_Angeles'))
 
 sensor = Adafruit_DHT.DHT11
 pin = 22
@@ -12,7 +18,7 @@ fahrenheit = (temperature*(9/5)) + 32
 
 def getTempAndHumidity():
     response = requests.post("https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod", 
-    json={"timestamp": time.strftime('%m/%d/%Y %H:%M'), "temperature":fahrenheit, "humidity":humidity},
+    json={"timestamp": date.strftime(date_format), "temperature":round(fahrenheit, 2)-8, "humidity":humidity},
     headers={"Content-Type": "application/json"},
     )
     print(response.json())
