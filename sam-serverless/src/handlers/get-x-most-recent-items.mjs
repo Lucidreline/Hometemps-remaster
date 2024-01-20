@@ -31,7 +31,9 @@ const getXMostRecentTimestamps = (timestampQuantity) => {
 
     // get resulting list of formatted string timestamps
     const results = []
-    results.push(dateToFormattedString(currentHour))
+    if (timestampQuantity > 0)
+        results.push(dateToFormattedString(currentHour))
+
     for (let i = 0; i < timestampQuantity - 1; i++) {
         currentHour.setHours(currentHour.getHours() - 1)
         results.push(dateToFormattedString(currentHour))
@@ -72,6 +74,7 @@ export const getXMostRecentItemsHandler = async (event) => {
     console.log('recieved: ', event)
 
     const timestampQuantity = event.pathParameters.timestampQuantity;
+    console.log("Here Sir", getXMostRecentTimestamps(timestampQuantity))
     const formattedKeys = formatTimestampsForQuery(getXMostRecentTimestamps(timestampQuantity))
     var params = {
         RequestItems: {

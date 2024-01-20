@@ -1,6 +1,6 @@
 {
     "httpMethod": "GET",
     "pathParameters": {
-        "timestampQuantity": "24"
+        "timestampQuantity": "2"
     }
 }
