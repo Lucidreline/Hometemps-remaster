@@ -1,5 +1,6 @@
 import Adafruit_DHT
 import requests
+import sys
 from datetime import datetime
 from pytz import timezone
 import pytz
@@ -18,15 +19,9 @@ fahrenheit = (temperature*(9/5)) + 32
 
 def getTempAndHumidity():
     response = requests.post("https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod", 
-    json={"timestamp": date.strftime(date_format), "temperature":round(fahrenheit, 2)-8, "humidity":humidity},
+    json={"timestamp": sys.argv[1] + "-" + date.strftime(date_format), "temperature":round(fahrenheit, 2)-8, "humidity":humidity},
     headers={"Content-Type": "application/json"},
     )
     print(response.json())
-
-
-
-
-
-
 
 getTempAndHumidity()
