@@ -1,6 +1,7 @@
 {
     "httpMethod": "GET",
     "pathParameters": {
-        "timestampQuantity": "2"
+        "timestampQuantity": "2",
+        "location": "Upstairs"
     }
 }
