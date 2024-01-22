@@ -4,7 +4,7 @@ import LocationCard from '../LocationCard/LocationCard'
 import './LocationCardList.scss'
 
 const getCurrentTimestamp = async () => {
-    const res = await fetch('https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/1')
+    const res = await fetch('https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/1/Upstairs')
     return res.json()
 }
 
