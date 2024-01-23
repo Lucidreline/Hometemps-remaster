@@ -1,4 +1,4 @@
 {
     "httpMethod": "POST",
-    "body": "{\"timestamp\": \"01/17/2024 14:00\",\"humidity\": -4,\"temperature\": -5}"
+    "body": "{\"timestamp\": \"Upstairs-01/20/2024 21:00\",\"humidity\": -4,\"temperature\": -5}"
 }

@@ -18,7 +18,7 @@ const dateToFormattedString = (dateObj) => {
     return `${("0" + dateObj.getMonth() + 1).slice(-2)}/${("0" + dateObj.getDate()).slice(-2)}/${dateObj.getFullYear()} ${("0" + dateObj.getHours()).slice(-2)}:${("0" + dateObj.getMinutes()).slice(-2)}`
 }
 
-const getXMostRecentTimestamps = (timestampQuantity) => {
+const getXMostRecentTimestamps = (timestampQuantity, location) => {
     if (timestampQuantity > 25) timestampQuantity = 25
 
     // get the current time
@@ -32,11 +32,11 @@ const getXMostRecentTimestamps = (timestampQuantity) => {
     // get resulting list of formatted string timestamps
     const results = []
     if (timestampQuantity > 0)
-        results.push(dateToFormattedString(currentHour))
+        results.push(`${location}-${dateToFormattedString(currentHour)}`)
 
     for (let i = 0; i < timestampQuantity - 1; i++) {
         currentHour.setHours(currentHour.getHours() - 1)
-        results.push(dateToFormattedString(currentHour))
+        results.push(`${location}-${dateToFormattedString(currentHour)}`)
     }
     return results.reverse()
 }
@@ -74,8 +74,9 @@ export const getXMostRecentItemsHandler = async (event) => {
     console.log('recieved: ', event)
 
     const timestampQuantity = event.pathParameters.timestampQuantity;
-    console.log("Here Sir", getXMostRecentTimestamps(timestampQuantity))
-    const formattedKeys = formatTimestampsForQuery(getXMostRecentTimestamps(timestampQuantity))
+    const location = event.pathParameters.location
+    console.log("Here Sir", getXMostRecentTimestamps(timestampQuantity, location))
+    const formattedKeys = formatTimestampsForQuery(getXMostRecentTimestamps(timestampQuantity, location))
     var params = {
         RequestItems: {
             [tableName]: {
