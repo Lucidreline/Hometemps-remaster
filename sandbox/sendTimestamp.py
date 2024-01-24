@@ -19,7 +19,7 @@ def getTempAndHumidity():
         humidity, temp = Adafruit_DHT.read(sensor, pin)
         if temp == None:
              print("Senor gave me undefined, let me try again")
-    fahrenheit = (temp*(9/5)) + 32
+    fahrenheit = ((temp*(9/5)) + 32) + sys.argv[2]
     return [fahrenheit, humidity]
 
 def sendTempAndHumidity():
