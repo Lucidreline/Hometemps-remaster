@@ -25,7 +25,7 @@ def getTempAndHumidity():
 def sendTempAndHumidity():
     sensorReading = getTempAndHumidity()
     response = requests.post("https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod",
-    json={"timestamp": sys.argv[1] + "-" + date.strftime(date_format), "temperature":round(sensorReading[0], 2)-8, "humidity":sensorReading[1]},
+    json={"timestamp": sys.argv[1] + "-" + date.strftime(date_format), "temperature":round(sensorReading[0], 2), "humidity":sensorReading[1]},
     headers={"Content-Type": "application/json"},
     )
     print(response.json())
