@@ -2,7 +2,7 @@ import React from 'react'
 import LocationCard from '../LocationCard/LocationCard.component'
 
 // -- Change This!!! --
-const locations = ["Outside", "Upstairs", "1", "2"]
+const locations = ["Outside", "Upstairs"]
 
 const LocationCardList = () => {
     return (
