@@ -15,7 +15,8 @@ if (process.env.AWS_SAM_LOCAL) {
 const tableName = process.env.MAIN_TABLE;
 
 const dateToFormattedString = (dateObj) => {
-    return `${("0" + dateObj.getMonth() + 1).slice(-2)}/${("0" + dateObj.getDate()).slice(-2)}/${dateObj.getFullYear()} ${("0" + dateObj.getHours()).slice(-2)}:${("0" + dateObj.getMinutes()).slice(-2)}`
+    console.log("boss this is the month I'm getting: " + dateObj.getMonth())
+    return `${("0" + (dateObj.getMonth() + 1)).slice(-2)}/${("0" + dateObj.getDate()).slice(-2)}/${dateObj.getFullYear()} ${("0" + dateObj.getHours()).slice(-2)}:${("0" + dateObj.getMinutes()).slice(-2)}`
 }
 
 const getXMostRecentTimestamps = (timestampQuantity, location) => {
@@ -102,6 +103,11 @@ export const getXMostRecentItemsHandler = async (event) => {
 
     const response = {
         statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ items: formattedData })
     };
 
