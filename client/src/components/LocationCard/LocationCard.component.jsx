@@ -10,43 +10,43 @@ import './LocationCard.styles.scss'
 
 const LocationCard = ({ location }) => {
 
-    // const getItems = async (location) => {
-    //     const res = await fetch(`https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/0.5/${location}`)
-    //     return res.json()
-    // }
+    let [tempRequest, setTempRequest] = useState({
+        items: [
+            {
+                temperature: -1,
+                humidity: -1
 
-    const [tempRequest, setTempRequest] = useState()
+            }
+        ]
+    })
 
     useEffect(() => {
 
         const fetchData = async () => {
+            const response = await fetch(`https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/0.5/${location}`)
 
-
-            console.log("test for:" + location)
-            const response = await fetch(`https://hkwzbkisch.execute-api.us-west-1.amazonaws.com/Prod/getxmostrecentitems/${location}`)
-
-            setTempRequest(response)
+            setTempRequest(await response.json())
 
         }
-
-
         fetchData()
 
     }, []);
 
+    console.log(tempRequest)
 
 
+    const { temperature, humidity } = tempRequest.items[0]
     return (
         <div className="location-card">
             <h3 className='card-title'>{location}</h3>
             <div className="card-body">
                 <div className="temperature-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faTemperatureThreeQuarters} />
-                    <h4 className="temperature-display">69&deg;F</h4>
+                    <h4 className="temperature-display">{tempRequest = !undefined ? temperature : 0} &deg;F</h4>
                 </div>
                 <div className="humidity-section">
                     <FontAwesomeIcon className='awesome-icon' icon={faDroplet} />
-                    <h4 className="humidity-display">70 %</h4>
+                    <h4 className="humidity-display">{tempRequest = !undefined ? humidity : 0} %</h4>
                 </div>
             </div>
         </div>
