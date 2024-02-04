@@ -30,7 +30,7 @@ const LocationCard = ({ location }) => {
         }
         fetchData()
 
-    }, []);
+    }, [location]);
 
     console.log(tempRequest)
 
